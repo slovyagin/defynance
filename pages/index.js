@@ -42,7 +42,6 @@ export default function Home () {
                     Left your email to...:
                   </label>
                   <input
-                    autoFocus
                     className='w-full lg'
                     id='email'
                     name='email'
