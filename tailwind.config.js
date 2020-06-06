@@ -1,21 +1,19 @@
+const defaultTheme = require('tailwindcss/defaultTheme')
+
 module.exports = {
-  important: true,
+  important: false,
   theme: {
-    fontFamily: {
-      display: ['Gilroy', 'sans-serif'],
-      body: ['Graphik', 'sans-serif'],
-    },
     extend: {
-      colors: {
-        cyan: '#9cdbff',
-      },
-      margin: {
-        '96': '24rem',
-        '128': '32rem',
-      },
+      fontFamily: {
+        sans: [
+          'IBM Plex Sans',
+          ...defaultTheme.fontFamily.sans
+        ],
+        serif: [
+          'IBM Plex Serif',
+          ...defaultTheme.fontFamily.serif
+        ]
+      }
     }
-  },
-  variants: {
-    opacity: ['responsive', 'hover']
   }
 }

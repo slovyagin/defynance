@@ -2,7 +2,98 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  @apply bg-blue-500 p-12;
+:root {
+  --defynance-green: #43B649;
 }
 
+html {
+  @apply bg-white p-0 text-gray-900 h-auto text-lg;
+  font-variant-ligatures: common-ligatures;
+}
+
+a, input, button {
+  @apply outline-none transition-colors duration-200
+}
+
+input {
+  @apply p-2 border-solid border-2 border-green-400 rounded mr-4 text-blue-800
+}
+
+input:hover {
+  @apply border-green-600
+}
+
+@media (min-width: 1280px) {
+  input.lg,
+  button.lg {
+    @apply p-4 text-xl
+  }
+}
+
+input:focus {
+  @apply bg-green-100 border-green-500
+}
+
+button, input[type=button] {
+  @apply select-none whitespace-no-wrap border-2 border-yellow-400 bg-yellow-400 p-2 rounded font-bold text-blue-800
+}
+
+button:hover, input[type=button]:hover {
+  @apply border-yellow-600
+}
+
+button:active, input[type=button]:active {
+  @apply transform translate-x-px translate-y-px
+}
+
+button:focus, input[type=button]:focus {
+  @apply shadow-outline
+}
+
+a {
+  @apply p-1 -m-1 text-orange-500 underline
+}
+
+a:hover {
+  @apply text-orange-600 bg-orange-100
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-serif font-bold
+}
+
+h1 {
+  @apply text-5xl mt-6 mb-2
+}
+
+h2 {
+  @apply text-4xl mt-6 mb-2
+}
+
+p {
+  @apply my-2
+}
+
+dt {
+  @apply font-bold
+}
+
+.defynance-green-fill {
+  fill: var(--defynance-green);
+}
+
+.bg-defynance-green {
+  background-color: var(--defynance-green);
+}
+
+.\@md ol {
+  @apply list-disc ml-10
+}
+
+.\@md ul {
+  @apply list-decimal ml-10
+}
+
+.\@md li {
+  @apply mb-2
+}
