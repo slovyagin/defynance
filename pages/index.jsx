@@ -9,7 +9,7 @@ export default function Home () {
   const [sending, setSending] = React.useState('initial')
   const [err, setErr] = React.useState(false)
   const [price, setPrice] = React.useState(1e5)
-  const [deposit, setDeposit] = React.useState(1)
+  const [deposit, setDeposit] = React.useState(10)
   const [years, setYears] = React.useState(5)
   const [i, setI] = React.useState(0.06)
 
@@ -56,13 +56,13 @@ export default function Home () {
       <section className='px-6 lg:px-10 max-h-20 md:text-xl md:mb-16'>
         <div className='max-w-screen-xl mx-auto flex flex-col relative z-10'>
           <div className='relative z-10'>
-            <p className='md:text-6xl text-5xl font-serif max-w-5xl'>
+            <p className='md:text-6xl text-4xl font-serif max-w-5xl'>
               <span className='text-blue-800'>Down payments are hard. </span>
               <br className='hidden lg:block' />
               <strong>Big, front page marketing slogan.</strong>
             </p>
             <p className='max-w-4xl'>
-              With the average UK home buyer paying over £40,000 up front,
+              With the average UK home buyer <a href='#'>paying over £40,000</a> up front,
               finding
               enough financial resources can seem like an impossibility. We want
               to give you another option.
@@ -84,8 +84,8 @@ export default function Home () {
                     to
                   </strong>
                   </div>
-                  <div className='flex mb-3'>
-                    <div className='lg:w-1/2 mr-2 flex-auto'>
+                  <div className='md:flex mb-3'>
+                    <div className='lg:w-1/2 mb-3 md:mb-0 mr-2 flex-auto'>
                       <label
                         className='block mb-1 text-sm'
                         htmlFor='email'
@@ -93,7 +93,7 @@ export default function Home () {
                         Email:
                       </label>
                       <input
-                        className='w-full lg'
+                        className='w-full lg input'
                         disabled={sending === 'sending'}
                         id='email'
                         name='email'
@@ -113,7 +113,7 @@ export default function Home () {
                         Name (optional):
                       </label>
                       <input
-                        className='w-full lg'
+                        className='w-full lg input'
                         disabled={sending === 'sending'}
                         id='name'
                         name='name'
@@ -126,7 +126,7 @@ export default function Home () {
                   </div>
                   <button
                     type='submit'
-                    className={clsx('lg mt-2 g-recaptcha', {
+                    className={clsx('btn lg mt-2 g-recaptcha', {
                       loading: sending === 'sending'
                     })}
                     disabled={sending === 'sending'}
@@ -141,10 +141,10 @@ export default function Home () {
                   sending === 'succeed'
                     ? (
                       <div
-                        className='absolute flex flex-col inset-0 bg-yellow-200 justify-center items-center'
+                        className='p-4 absolute flex flex-col inset-0 bg-yellow-200 justify-center items-center'
                       >
                         <p>Thanks for signing up! We will contact you soon</p>
-                        <p><button onClick={() => setSending('initial')}>Got it!</button></p>
+                        <p><button className='btn' onClick={() => setSending('initial')}>Got it!</button></p>
                       </div>
                     )
                     : null
@@ -231,7 +231,7 @@ export default function Home () {
                   </label>
                   <NumberFormat
                     allowNegative={false}
-                    className='w-full lg'
+                    className='w-full lg input'
                     id='price'
                     isNumericString
                     name='price'
@@ -260,7 +260,7 @@ export default function Home () {
                   </label>
                   <NumberFormat
                     allowNegative={false}
-                    className='w-full lg'
+                    className='w-full lg input'
                     id='deposit'
                     isNumericString
                     name='deposit'
@@ -293,7 +293,7 @@ export default function Home () {
                     Period, up to 15 years:
                   </label>
                   <NumberFormat
-                    className='w-full lg'
+                    className='w-full lg input'
                     id='years'
                     inputMode='numeric'
                     max={15}
@@ -325,7 +325,7 @@ export default function Home () {
                 </div>
               </div>
               <div className='mt-8 text-2xl'>
-                <div className='mb-4 flex'>
+                <div className='mb-4 flex select-none'>
                   <label
                     className={clsx('block mb-1 text-s mb-2 text-gray-500 border-2 border-gray-600 text-base rounded-l-sm p-2', {
                       'bg-gray-400 text-gray-900': i === 0.06,
@@ -381,8 +381,7 @@ export default function Home () {
                 />
                 </div>
                 <div className='mb-4'>
-                  <b>Your
-                    share:
+                  <b>Your share:
                   </b> <NumberFormat
                   thousandSeparator
                   prefix='£'
