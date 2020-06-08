@@ -19,7 +19,7 @@ function Logo () {
 const components = {
   wrapper: props => (
     <section className='@md p-6 lg:p-10 pt-0 lg:pt-0'>
-      <div className='max-w-screen-xl mx-auto'  {...props} />
+      <div className='max-w-screen-xl mx-auto' {...props} />
     </section>
   )
 }
@@ -33,6 +33,7 @@ const App = ({ Component, pageProps, ...rest }) => {
         <title>{appConfig.name}</title>
         <link href={appConfig.fonts.sans} rel='stylesheet' />
         <link href={appConfig.fonts.serif} rel='stylesheet' />
+        {/*<script src="https://www.google.com/recaptcha/api.js"/>*/}
       </Head>
       <header
         key='header'

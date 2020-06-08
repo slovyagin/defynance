@@ -6,6 +6,11 @@
   --defynance-green: #43B649;
 }
 
+.blurry {
+  filter: blur(5px);
+  opacity: var(--opacity-75);
+}
+
 html {
   @apply bg-white p-0 text-gray-900 h-auto text-lg;
   font-variant-ligatures: common-ligatures;
@@ -17,6 +22,12 @@ a, input, button {
 
 input {
   @apply p-2 border-solid border-2 border-green-400 rounded mr-4 text-blue-800
+}
+
+input[type=text], input[type=email], input[type=number] , input[type=tel] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 input:hover {
@@ -34,7 +45,12 @@ input:focus {
   @apply bg-green-100 border-green-500
 }
 
-button, input[type=button] {
+input:disabled {
+  @apply bg-gray-100 border-gray-400 text-gray-400
+}
+
+button,
+input[type=button] {
   @apply select-none whitespace-no-wrap border-2 border-yellow-400 bg-yellow-400 p-2 rounded font-bold text-blue-800
 }
 
@@ -48,6 +64,14 @@ button:active, input[type=button]:active {
 
 button:focus, input[type=button]:focus {
   @apply shadow-outline
+}
+
+button.loading {
+  @apply cursor-wait
+}
+
+button:disabled {
+  @apply shadow-none border-yellow-200 bg-yellow-200 text-yellow-400 translate-x-0 translate-y-0
 }
 
 a {

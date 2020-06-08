@@ -1,5 +1,6 @@
 {
   "name": "Defynance",
+  "airtableApiUrl": "https://api.airtable.com/v0/",
   "fonts": {
     "sans": "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&display=swap",
     "serif": "https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;600&display=swap"

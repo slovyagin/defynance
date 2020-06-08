@@ -1,11 +1,55 @@
 import clsx from 'clsx'
+import axios from 'axios'
 import NumberFormat from 'react-number-format'
+import appConfig from '../appConfig.json'
 
 export default function Home () {
+  const [email, setEmail] = React.useState('')
+  const [name, setName] = React.useState('')
+  const [sending, setSending] = React.useState('initial')
+  const [err, setErr] = React.useState(false)
   const [price, setPrice] = React.useState(1e5)
   const [deposit, setDeposit] = React.useState(1)
   const [years, setYears] = React.useState(5)
   const [i, setI] = React.useState(0.06)
+
+  React.useEffect(() => {
+    let timeoutId;
+    if (sending === 'succeed') {
+      timeoutId = window.setTimeout(() => setSending('initial'), 10000)
+    } else {
+      clearTimeout(timeoutId)
+    }
+  }, [sending])
+
+  async function sendEmail () {
+    const url = 'https://api.airtable.com/v0/appeBq5WaMAMoTlYB/Email'
+    try {
+      setSending('sending')
+      await axios.post(url, {
+          records: [
+            {
+              fields: {
+                Email: email,
+                Name: name
+              }
+            }
+          ]
+        },
+        {
+          headers: {
+            Authorization: 'Bearer keyPh2NCeFXvPKVPO',
+            'Content-Type': 'application/json'
+          }
+        })
+      setEmail('')
+      setName('')
+      setSending('succeed')
+    } catch (error) {
+      setErr(error)
+      setSending('error')
+    }
+  }
 
   return (
     <>
@@ -29,33 +73,82 @@ export default function Home () {
             </p>
             <form onSubmit={(event) => {
               event.preventDefault()
+              sendEmail()
             }}
             >
               <div
-                className='lg:w-3/4 flex items-end mt-12 bg-yellow-100 border border-yellow-200 p-4 -m-4 rounded r-1 relative z-10'
+                className='relative lg:w-3/4 mt-12 bg-yellow-100 border border-yellow-200 p-4 -m-4 rounded r-1 relative z-10'
               >
-                <div className='lg:w-1/2 mr-2 flex-auto'>
-                  <label
-                    className='block mb-1 text-s mb-4'
-                    htmlFor='email'
+                <div>
+                  <div className='mb-3'><strong>Left us your email here
+                    to
+                  </strong>
+                  </div>
+                  <div className='flex mb-3'>
+                    <div className='lg:w-1/2 mr-2 flex-auto'>
+                      <label
+                        className='block mb-1 text-sm'
+                        htmlFor='email'
+                      >
+                        Email:
+                      </label>
+                      <input
+                        className='w-full lg'
+                        disabled={sending === 'sending'}
+                        id='email'
+                        name='email'
+                        onChange={({ target: { value } }) => setEmail(value)}
+                        placeholder='Enter your email here'
+                        required
+                        type='email'
+                        value={email}
+                      />
+                    </div>
+
+                    <div className='lg:w-1/2 mr-2 flex-auto'>
+                      <label
+                        className='block mb-1 text-sm'
+                        htmlFor='name'
+                      >
+                        Name (optional):
+                      </label>
+                      <input
+                        className='w-full lg'
+                        disabled={sending === 'sending'}
+                        id='name'
+                        name='name'
+                        onChange={({ target: { value } }) => setName(value)}
+                        placeholder='Enter your name here'
+                        type='text'
+                        value={name}
+                      />
+                    </div>
+                  </div>
+                  <button
+                    type='submit'
+                    className={clsx('lg mt-2 g-recaptcha', {
+                      loading: sending === 'sending'
+                    })}
+                    disabled={sending === 'sending'}
+                    data-sitekey="6LfmfQEVAAAAAOUQbJ3_y0YwTK1wUOAqeQj9re-Z"
+                    data-callback='onSubmit'
+                    data-action='submit'
                   >
-                    Left your email to...:
-                  </label>
-                  <input
-                    className='w-full lg'
-                    id='email'
-                    name='email'
-                    placeholder='Enter your email here'
-                    required
-                    type='email'
-                  />
+                    {sending === 'sending' ? 'Registering your interest...' : 'Register your interest'}
+                  </button>
                 </div>
-                <button
-                  type='submit'
-                  className='lg'
-                >
-                  Register your interest
-                </button>
+                {
+                  sending === 'succeed'
+                    ? (
+                      <div
+                        className='absolute flex flex-col inset-0 bg-yellow-200 justify-center items-center'
+                      >
+                        <p>Thanks for signing up! We will contact you soon</p>
+                        <p><button onClick={() => setSending('initial')}>Got it!</button></p>
+                      </div>
+                    )
+                    : null
+                }
               </div>
             </form>
           </div>
@@ -284,7 +377,7 @@ export default function Home () {
                   thousandSeparator
                   prefix='£'
                   displayType='text'
-                  value={Math.round(price * ((i + 1) ^ years))}
+                  value={Math.round(price * ((i + 1) ** years))}
                 />
                 </div>
                 <div className='mb-4'>
@@ -294,7 +387,7 @@ export default function Home () {
                   thousandSeparator
                   prefix='£'
                   displayType='text'
-                  value={Math.round(price * (1 - ((deposit * 0.01) / 0.8)) * ((i + 1) ^ years))}
+                  value={Math.round(price * (1 - ((deposit * 0.01) / 0.8)) * ((i + 1) ** years))}
                 />
                 </div>
                 <div className='mb-4'>
@@ -302,7 +395,7 @@ export default function Home () {
                   thousandSeparator
                   prefix='£'
                   displayType='text'
-                  value={Math.round(((deposit * 0.01) / 0.8) * price * ((i + 1) ^ years))}
+                  value={Math.round(((deposit * 0.01) / 0.8) * price * ((i + 1) ** years))}
                 />
                 </div>
               </div>
