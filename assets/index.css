@@ -80,15 +80,15 @@ a:hover {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  @apply font-serif font-bold
+  @apply font-serif  mt-6 mb-2
 }
 
 h1 {
-  @apply text-5xl mt-6 mb-2
+  @apply text-4xl font-bold
 }
 
 h2 {
-  @apply text-4xl mt-6 mb-2
+  @apply text-3xl
 }
 
 p {
@@ -97,6 +97,10 @@ p {
 
 dt {
   @apply font-bold
+}
+
+.\@md {
+  @apply max-w-3xl
 }
 
 .\@md ol {
