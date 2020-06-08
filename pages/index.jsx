@@ -166,7 +166,7 @@ export default function Home () {
         </div>
       </section>
       <section
-        className='p-6 lg:p-10 relative md:mb-16'
+        className='p-4 lg:p-10 relative md:mb-16'
         style={{
           backgroundColor: '#f7fffc'
         }}
@@ -210,7 +210,7 @@ export default function Home () {
       </section>
 
       <section
-        className='p-6 lg:p-10 max-h-20'
+        className='p-4 lg:p-10 max-h-20'
         style={{
           backgroundColor: '#fffdf7'
         }}
@@ -219,10 +219,10 @@ export default function Home () {
           <h2 className='mb-4'>
             Rough Calculator
           </h2>
-          <form action=''>
-            <div className='grid grid-cols-2 md:gap-8 gap-4'>
-              <div className=''>
-                <div className='mb-4'>
+          <form>
+            <div className='md:flex'>
+              <div className='md:w-1/3 grid grid-cols-2 gap-4 md:grid-cols-none md:block'>
+                <div className='md:mb-4'>
                   <label
                     className='block mb-1 text-s mb-2'
                     htmlFor='price'
@@ -251,7 +251,7 @@ export default function Home () {
                     value={price}
                   />
                 </div>
-                <div className='mb-4'>
+                <div className='md:mb-4'>
                   <label
                     className='block mb-1 text-s mb-2'
                     htmlFor='deposit'
@@ -285,7 +285,7 @@ export default function Home () {
                     onChange={event => setDeposit(event.target.value)}
                   />
                 </div>
-                <div className='mb-4'>
+                <div className='md:mb-4'>
                   <label
                     className='block mb-1 text-s mb-2'
                     htmlFor='years'
@@ -324,7 +324,7 @@ export default function Home () {
                   />
                 </div>
               </div>
-              <div className='mt-8 text-2xl'>
+              <div className='md:w-2/3 md:ml-8 mt-8 md:text-2xl'>
                 <div className='mb-4 flex select-none'>
                   <label
                     className={clsx('block mb-1 text-s mb-2 text-gray-500 border-2 border-gray-600 text-base rounded-l-sm p-2', {

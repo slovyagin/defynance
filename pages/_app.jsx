@@ -20,7 +20,7 @@ function Logo () {
 
 const components = {
   wrapper: props => (
-    <section className='@md p-6 lg:p-10 pt-0 lg:pt-0'>
+    <section className='@md p-4 lg:p-10 pt-0 lg:pt-0'>
       <div className='max-w-screen-xl mx-auto' {...props} />
     </section>
   )
@@ -39,7 +39,7 @@ const App = ({ Component, pageProps, ...rest }) => {
       </Head>
       <header
         key='header'
-        className='p-6 lg:p-10 top-0 w-full z-20 relative'
+        className='p-4 lg:p-10 top-0 w-full z-20 relative'
       >
         <div className='md:flex max-w-screen-xl mx-auto'>
           {
@@ -60,7 +60,7 @@ const App = ({ Component, pageProps, ...rest }) => {
       <main key='main'>
         <Component {...pageProps} />
       </main>
-      <footer className='p-6 lg:p-10 w-full'>
+      <footer className='p-4 lg:p-10 w-full'>
         <div className='md:flex max-w-screen-xl mx-auto'>
           <p>&copy; 2020 Defynance, Ltd.</p>
           <ul className='ml-auto md:flex'>
