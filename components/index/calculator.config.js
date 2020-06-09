@@ -2,21 +2,22 @@ export default {
   title: 'Rough Calculator',
   form: {
     purchasePrice: {
-      label: 'Purchase price, £:',
+      label: 'Purchase price, £',
       initialValue: 1e5,
       min: 0,
       max: 1e7,
+      step: 500,
     },
     deposit: {
-      label: 'Percent deposit:',
+      label: 'Percent deposit',
       initialValue: 10,
-      min: 0,
+      min: 1,
       max: 100,
     },
     period: {
-      label: 'Period, up to 15 years::',
+      label: 'Period, up to 15 years',
       initialValue: 5,
-      min: 0,
+      min: 1,
       max: 15,
     }
   },
@@ -33,23 +34,19 @@ export default {
         c: -0.02
       }
     ],
-    fields: [
-      {
-        label: 'We fund',
-        name: 'fund',
+    fields: {
+      fund: {
+        label: 'We fund: ',
       },
-      {
-        label: 'Future home value',
-        name: 'futureValue',
+      futureValue: {
+        label: 'Future home value: ',
       },
-      {
-        label: 'Your share',
-        name: 'yourShare',
+      yourShare: {
+        label: 'Your share: ',
       },
-      {
-        label: 'Our share',
-        name: 'ourShare',
+      ourShare: {
+        label: 'Our share: ',
       }
-    ]
+    }
   }
 }

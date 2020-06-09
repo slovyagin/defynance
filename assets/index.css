@@ -107,6 +107,7 @@ dt {
   @apply font-bold
 }
 
+
 .\@md {
   @apply max-w-3xl
 }

@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { MDXProvider } from '@mdx-js/react'
 import '../assets/index.css'
 import LogoSVG from '../assets/logo.svg'
-import appConfig from '../appConfig.json'
+import appConfig from '../app.config.json'
 
 function Logo () {
   return (

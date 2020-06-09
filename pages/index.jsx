@@ -1,7 +1,8 @@
 import clsx from 'clsx'
 import axios from 'axios'
 import NumberFormat from 'react-number-format'
-import appConfig from '../appConfig.json'
+import appConfig from '../app.config.json'
+import calculator from '../components/index/calculator.config'
 
 export default function Home () {
   const [email, setEmail] = React.useState('')
@@ -11,11 +12,11 @@ export default function Home () {
   const [price, setPrice] = React.useState(1e5)
   const [deposit, setDeposit] = React.useState(10)
   const [years, setYears] = React.useState(5)
-  const [i, setI] = React.useState(0.06)
+  const [i, setI] = React.useState(calculator.output.switcher[0].c)
 
   React.useEffect(() => {
-    let timeoutId;
-    if (sending === 'succeed') {
+    let timeoutId
+    if (['succeed', 'error'].includes(sending)) {
       timeoutId = window.setTimeout(() => setSending('initial'), 10000)
     } else {
       clearTimeout(timeoutId)
@@ -62,7 +63,8 @@ export default function Home () {
               <strong>Big, front page marketing slogan.</strong>
             </p>
             <p className='max-w-4xl'>
-              With the average UK home buyer <a href='#'>paying over £40,000</a> up front,
+              With the average UK home buyer <a href='#'>paying over
+              £40,000</a> up front,
               finding
               enough financial resources can seem like an impossibility. We want
               to give you another option.
@@ -144,11 +146,37 @@ export default function Home () {
                         className='p-4 absolute flex flex-col inset-0 bg-yellow-200 justify-center items-center'
                       >
                         <p>Thanks for signing up! We will contact you soon</p>
-                        <p><button className='btn' onClick={() => setSending('initial')}>Got it!</button></p>
+                        <p>
+                          <button
+                            className='btn'
+                            onClick={() => setSending('initial')}
+                          >Got it!
+                          </button>
+                        </p>
                       </div>
                     )
                     : null
                 }
+                {
+                  sending === 'error'
+                    ? (
+                      <div
+                        className='p-4 absolute flex flex-col inset-0 bg-red-200 justify-center items-center'
+                      >
+                        <p>Unfotunately, we weren't able to send your application. We're sorry!</p>
+                        <p>
+                          <button
+                            className='btn'
+                            onClick={() => setSending('initial')}
+                          >
+                            Try again
+                          </button>
+                        </p>
+                      </div>
+                    )
+                    : null
+                }
+
               </div>
             </form>
           </div>
@@ -217,17 +245,18 @@ export default function Home () {
       >
         <div className='max-w-screen-xl mx-auto'>
           <h2 className='mb-4'>
-            Rough Calculator
+            {calculator.title}
           </h2>
           <form>
             <div className='md:flex'>
-              <div className='md:w-1/3 grid grid-cols-2 gap-4 md:grid-cols-none md:block'>
+              <div
+                className='md:w-1/3 grid grid-cols-2 gap-4 md:grid-cols-none md:block'>
                 <div className='md:mb-4'>
                   <label
                     className='block mb-1 text-s mb-2'
                     htmlFor='price'
                   >
-                    Purchase price, £:
+                    {calculator.form.purchasePrice.label}
                   </label>
                   <NumberFormat
                     allowNegative={false}
@@ -242,11 +271,11 @@ export default function Home () {
                   />
                   <input
                     id='price-range'
-                    min={0}
-                    max={1e7}
+                    min={calculator.form.purchasePrice.min}
+                    max={calculator.form.purchasePrice.max}
                     name='price-range'
                     onChange={event => setPrice(event.target.value)}
-                    step={500}
+                    step={calculator.form.purchasePrice.step}
                     type='range'
                     value={price}
                   />
@@ -256,7 +285,7 @@ export default function Home () {
                     className='block mb-1 text-s mb-2'
                     htmlFor='deposit'
                   >
-                    Percent deposit:
+                    {calculator.form.deposit.label}
                   </label>
                   <NumberFormat
                     allowNegative={false}
@@ -266,9 +295,9 @@ export default function Home () {
                     name='deposit'
                     value={deposit}
                     format={value => {
-                      if (value > 100) {
+                      if (value > calculator.form.deposit.max) {
                         return '100%'
-                      } else if (value < 1 || !value) {
+                      } else if (value < calculator.form.deposit.min || !value) {
                         return '1%'
                       }
                       return `${value}%`
@@ -279,8 +308,8 @@ export default function Home () {
                     type='range'
                     id='deposit-range'
                     name='deposit-range'
-                    min={0}
-                    max={100}
+                    min={calculator.form.deposit.min}
+                    max={calculator.form.deposit.max}
                     value={deposit}
                     onChange={event => setDeposit(event.target.value)}
                   />
@@ -290,35 +319,34 @@ export default function Home () {
                     className='block mb-1 text-s mb-2'
                     htmlFor='years'
                   >
-                    Period, up to 15 years:
+                    {calculator.form.period.label}
                   </label>
                   <NumberFormat
                     className='w-full lg input'
                     id='years'
                     inputMode='numeric'
-                    max={15}
-                    min={1}
+                    min={calculator.form.period.min}
+                    max={calculator.form.period.max}
                     name='years'
                     required
                     suffix={years > 1 ? ' years' : ' year'}
                     value={years}
-                    onValueChange={({ floatValue }) => {
-                      if (floatValue > 15) {
-                        setYears(15)
-                        return
-                      } else if (floatValue < 1) {
-                        setYears(1)
-                        return
+                    format={value => {
+                      if (value > calculator.form.period.max) {
+                        return `${calculator.form.deposit.max} years`
+                      } else if (value <= calculator.form.deposit.min || !value) {
+                        return '1 year'
                       }
-                      setYears(floatValue)
+                      return `${value} years`
                     }}
+                    onValueChange={({ floatValue }) => setYears(floatValue)}
                   />
                   <input
                     type='range'
                     id='deposit-range'
                     name='deposit-range'
-                    min={1}
-                    max={15}
+                    min={calculator.form.period.min}
+                    max={calculator.form.period.max}
                     value={years}
                     onChange={event => setYears(event.target.value)}
                   />
@@ -326,46 +354,38 @@ export default function Home () {
               </div>
               <div className='md:w-2/3 md:ml-8 mt-8 md:text-2xl'>
                 <div className='mb-4 flex select-none'>
-                  <label
-                    className={clsx('block mb-1 text-s mb-2 text-gray-500 border-2 border-gray-600 text-base rounded-l-sm p-2', {
-                      'bg-gray-400 text-gray-900': i === 0.06,
-                      'hover:bg-gray-200 cursor-pointer': i !== 0.06
-                    })}
-                    htmlFor='i0'
-                  >
-                    Average increase
-                    <input
-                      className='hidden'
-                      type='radio'
-                      value='i0'
-                      name='i0'
-                      id='i0'
-                      checked={i === 0.06}
-                      onChange={() => setI(0.06)}
-                    />
-                  </label>
-                  <label
-                    className={clsx('border-l-0 block mb-1 text-s mb-2 text-gray-500 border-2 border-gray-600 text-base rounded-r-sm p-2',
-                      {
-                        'bg-gray-400 text-gray-900': i === -0.02,
-                        'hover:bg-gray-200 cursor-pointer': i !== -0.02
-                      })}
-                    htmlFor='i1'
-                  >
-                    Decline in value
-                    <input
-                      className='hidden'
-                      type='radio'
-                      value='i1'
-                      name='i1'
-                      id='i1'
-                      checked={i === -0.02}
-                      onChange={() => setI(-0.02)}
-                    />
-                  </label>
+                  {
+                    calculator.output.switcher.map(({ label, name, c }, idx, arr) => {
+                      const isActive = i === c
+                      return (
+                        <label
+                          key={name}
+                          htmlFor={name}
+                          className={clsx('transition transition-colors duration-200 block mb-1 text-s mb-2 text-gray-500 border-2 border-gray-600 text-base p-2', {
+                            'bg-gray-400 text-gray-900': isActive,
+                            'hover:bg-gray-200 cursor-pointer': !isActive,
+                            'rounded-l-sm': idx === 0,
+                            'border-l-0': idx > 0,
+                            'rounded-r-sm': idx === arr.length - 1
+                          })}
+                        >
+                          {label}
+                          <input
+                            className='hidden'
+                            type='radio'
+                            value={name}
+                            name={name}
+                            id={name}
+                            checked={isActive}
+                            onChange={() => setI(c)}
+                          />
+                        </label>
+                      )
+                    })
+                  }
                 </div>
                 <div className='mb-4'>
-                  <b>We fund:</b> <NumberFormat
+                  <b>{calculator.output.fields.fund.label}</b> <NumberFormat
                   thousandSeparator
                   prefix='£'
                   displayType='text'
@@ -373,24 +393,25 @@ export default function Home () {
                 />
                 </div>
                 <div className='mb-4'>
-                  <b>Future home value:</b> <NumberFormat
-                  thousandSeparator
-                  prefix='£'
-                  displayType='text'
-                  value={Math.round(price * ((i + 1) ** years))}
-                />
+                  <b>{calculator.output.fields.futureValue.label}</b>
+                  <NumberFormat
+                    thousandSeparator
+                    prefix='£'
+                    displayType='text'
+                    value={Math.round(price * ((i + 1) ** years))}
+                  />
                 </div>
                 <div className='mb-4'>
-                  <b>Your share:
-                  </b> <NumberFormat
-                  thousandSeparator
-                  prefix='£'
-                  displayType='text'
-                  value={Math.round(price * (1 - ((deposit * 0.01) / 0.8)) * ((i + 1) ** years))}
-                />
+                  <b>{calculator.output.fields.yourShare.label}</b>
+                  <NumberFormat
+                    thousandSeparator
+                    prefix='£'
+                    displayType='text'
+                    value={Math.round(price * (1 - ((deposit * 0.01) / 0.8)) * ((i + 1) ** years))}
+                  />
                 </div>
                 <div className='mb-4'>
-                  <b>Our share:</b> <NumberFormat
+                  <b>{calculator.output.fields.ourShare.label}</b> <NumberFormat
                   thousandSeparator
                   prefix='£'
                   displayType='text'
