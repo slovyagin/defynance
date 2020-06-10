@@ -26,7 +26,33 @@ const components = {
   )
 }
 
+function useCookiesBanner () {
+  const [cookiesAccepted, setCookiesAccepted] = React.useState(false)
+
+  React.useEffect(() => {
+    const ls = window.localStorage
+    const LS_KEY = '@defynance:cookie-accepted'
+    const lsValue = getLsValue()
+    setCookiesAccepted(lsValue)
+
+    if (cookiesAccepted && !lsValue) {
+      ls.setItem(LS_KEY, 'true')
+    }
+
+    function getLsValue () {
+      try {
+        return JSON.parse(ls.getItem(LS_KEY))
+      } catch {
+        return false
+      }
+    }
+  }, [cookiesAccepted])
+
+  return [cookiesAccepted, setCookiesAccepted]
+}
+
 const App = ({ Component, pageProps, ...rest }) => {
+  const [cookiesAccepted, setCookiesAccepted] = useCookiesBanner()
   const router = useRouter()
 
   return (
@@ -44,9 +70,11 @@ const App = ({ Component, pageProps, ...rest }) => {
         <div className='md:flex max-w-screen-xl mx-auto'>
           {
             router.route === '/'
-              ? <div className='p-1 -m-1 rounded r-2 border border-transparent'><Logo /></div>
+              ? <div className='p-1 -m-1 rounded r-2 border border-transparent'>
+                <Logo /></div>
               : <Link href='/'>
-                <a className='p-1 -m-1 rounded r-2 block hover:border-green-500 border border-transparent'>
+                <a
+                  className='p-1 -m-1 rounded r-2 block hover:border-green-500 border border-transparent'>
                   <Logo />
                 </a>
               </Link>
@@ -65,10 +93,35 @@ const App = ({ Component, pageProps, ...rest }) => {
           <p>&copy; 2020 Defynance, Ltd.</p>
           <ul className='ml-auto md:flex'>
             <li><a href='/privacy'>Privacy policy</a></li>
-            <li className='md:ml-4'><a href='/terms'>Terms and conditions</a></li>
+            <li className='md:ml-4'><a href='/terms'>Terms and conditions</a>
+            </li>
           </ul>
         </div>
       </footer>
+      {
+        cookiesAccepted
+          ? null
+          :
+          (<aside
+              className='text-xs p-4 fixed flex justify-center bottom-0 right-0 left-0 z-20'
+            >
+              <div
+                className="max-w-lg w-full p-2 rounded shadow-md bg-gray-100 flex"
+              >
+                <span>
+                  We us cookies. To continue using this site you must accept
+                our <a href='/terms'>terms and conditions</a>.
+                </span>
+                <button
+                  className="btn ml-auto"
+                  onClick={() => setCookiesAccepted(true)}
+                >
+                  Cool then. Accept
+                </button>
+              </div>
+            </aside>
+          )
+      }
     </MDXProvider>
   )
 }
