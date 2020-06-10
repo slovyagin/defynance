@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import axios from 'axios'
 import NumberFormat from 'react-number-format'
 import appConfig from '../app.config.json'
-import calculator from '../components/index/calculator.config'
+import calculator from '../configs/calculator.config'
 
 export default function Home () {
   const [email, setEmail] = React.useState('')
@@ -28,21 +28,21 @@ export default function Home () {
     try {
       setSending('sending')
       await axios.post(url, {
-          records: [
-            {
-              fields: {
-                Email: email,
-                Name: name
-              }
+        records: [
+          {
+            fields: {
+              Email: email,
+              Name: name
             }
-          ]
-        },
-        {
-          headers: {
-            Authorization: 'Bearer keyPh2NCeFXvPKVPO',
-            'Content-Type': 'application/json'
           }
-        })
+        ]
+      },
+      {
+        headers: {
+          Authorization: 'Bearer keyPh2NCeFXvPKVPO',
+          'Content-Type': 'application/json'
+        }
+      })
       setEmail('')
       setName('')
       setSending('succeed')
@@ -64,7 +64,8 @@ export default function Home () {
             </p>
             <p className='max-w-4xl'>
               With the average UK home buyer <a href='#'>paying over
-              £40,000</a> up front,
+              £40,000
+              </a> up front,
               finding
               enough financial resources can seem like an impossibility. We want
               to give you another option.
@@ -132,7 +133,7 @@ export default function Home () {
                       loading: sending === 'sending'
                     })}
                     disabled={sending === 'sending'}
-                    data-sitekey="6LfmfQEVAAAAAOUQbJ3_y0YwTK1wUOAqeQj9re-Z"
+                    data-sitekey='6LfmfQEVAAAAAOUQbJ3_y0YwTK1wUOAqeQj9re-Z'
                     data-callback='onSubmit'
                     data-action='submit'
                   >
@@ -248,9 +249,10 @@ export default function Home () {
             {calculator.title}
           </h2>
           <form>
-            <div className='md:flex'>
+            <div className='md:flex lg:w-3/4'>
               <div
-                className='md:w-1/3 grid grid-cols-2 gap-4 md:grid-cols-none md:block'>
+                className='md:w-1/2 grid grid-cols-2 gap-4 md:grid-cols-none md:block'
+              >
                 <div className='md:mb-4'>
                   <label
                     className='block mb-1 text-s mb-2'
@@ -333,8 +335,8 @@ export default function Home () {
                     value={years}
                     format={value => {
                       if (value > calculator.form.period.max) {
-                        return `${calculator.form.deposit.max} years`
-                      } else if (value <= calculator.form.deposit.min || !value) {
+                        return `${calculator.form.period.max} years`
+                      } else if (value <= calculator.form.period.min || !value) {
                         return '1 year'
                       }
                       return `${value} years`
@@ -352,7 +354,7 @@ export default function Home () {
                   />
                 </div>
               </div>
-              <div className='md:w-2/3 md:ml-8 mt-8 md:text-2xl'>
+              <div className='md:w-1/2 md:ml-8 mt-8 md:text-2xl'>
                 <div className='mb-4 flex select-none'>
                   {
                     calculator.output.switcher.map(({ label, name, c }, idx, arr) => {
@@ -386,11 +388,11 @@ export default function Home () {
                 </div>
                 <div className='mb-4'>
                   <b>{calculator.output.fields.fund.label}</b> <NumberFormat
-                  thousandSeparator
-                  prefix='£'
-                  displayType='text'
-                  value={Math.round(price * (deposit * 0.01))}
-                />
+                    thousandSeparator
+                    prefix='£'
+                    displayType='text'
+                    value={Math.round(price * (deposit * 0.01))}
+                  />
                 </div>
                 <div className='mb-4'>
                   <b>{calculator.output.fields.futureValue.label}</b>
@@ -412,11 +414,11 @@ export default function Home () {
                 </div>
                 <div className='mb-4'>
                   <b>{calculator.output.fields.ourShare.label}</b> <NumberFormat
-                  thousandSeparator
-                  prefix='£'
-                  displayType='text'
-                  value={Math.round(((deposit * 0.01) / 0.8) * price * ((i + 1) ** years))}
-                />
+                    thousandSeparator
+                    prefix='£'
+                    displayType='text'
+                    value={Math.round(((deposit * 0.01) / 0.8) * price * ((i + 1) ** years))}
+                  />
                 </div>
               </div>
             </div>

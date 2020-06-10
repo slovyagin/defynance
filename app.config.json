@@ -1,5 +1,7 @@
 {
   "name": "Defynance",
+  "description": "With the average UK home buyer paying over £40,000 up front, finding enough financial resources can seem like an impossibility. We want to give you another option.",
+  "splashImage": "/splash.png",
   "airtableApiUrl": "https://api.airtable.com/v0/",
   "fonts": {
     "sans": {

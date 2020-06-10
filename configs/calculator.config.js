@@ -6,19 +6,19 @@ export default {
       initialValue: 1e5,
       min: 0,
       max: 1e7,
-      step: 500,
+      step: 500
     },
     deposit: {
       label: 'Percent deposit',
       initialValue: 10,
       min: 1,
-      max: 100,
+      max: 100
     },
     period: {
       label: 'Period, up to 15 years',
       initialValue: 5,
       min: 1,
-      max: 15,
+      max: 15
     }
   },
   output: {
@@ -36,16 +36,16 @@ export default {
     ],
     fields: {
       fund: {
-        label: 'We fund: ',
+        label: 'We fund: '
       },
       futureValue: {
-        label: 'Future home value: ',
+        label: 'Future home value: '
       },
       yourShare: {
-        label: 'Your share: ',
+        label: 'Your share: '
       },
       ourShare: {
-        label: 'Our share: ',
+        label: 'Our share: '
       }
     }
   }

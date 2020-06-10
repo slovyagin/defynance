@@ -8,7 +8,7 @@ import appConfig from '../app.config.json'
 
 function Logo () {
   return (
-    <div className="text-green-500">
+    <div className='text-green-500'>
       <LogoSVG
         height={23}
         width={150}
@@ -27,21 +27,20 @@ const components = {
 }
 
 function useCookiesBanner () {
-  const [cookiesAccepted, setCookiesAccepted] = React.useState(false)
+  const [cookiesAccepted, setCookiesAccepted] = React.useState('initial')
 
   React.useEffect(() => {
     const ls = window.localStorage
     const LS_KEY = '@defynance:cookie-accepted'
     const lsValue = getLsValue()
-    setCookiesAccepted(lsValue)
-
-    if (cookiesAccepted && !lsValue) {
-      ls.setItem(LS_KEY, 'true')
+    if (cookiesAccepted === true) {
+      ls.setItem(LS_KEY, cookiesAccepted)
     }
+    setCookiesAccepted(lsValue)
 
     function getLsValue () {
       try {
-        return JSON.parse(ls.getItem(LS_KEY))
+        return !!JSON.parse(ls.getItem(LS_KEY))
       } catch {
         return false
       }
@@ -61,7 +60,34 @@ const App = ({ Component, pageProps, ...rest }) => {
         <title>{appConfig.name}</title>
         <link href={appConfig.fonts.sans.url} rel='stylesheet' />
         <link href={appConfig.fonts.serif.url} rel='stylesheet' />
-        {/*<script src="https://www.google.com/recaptcha/api.js"/>*/}
+        <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+        <link rel='alternate icon' href='/favicon.ico' />
+        <link rel='mask-icon' href='/safari-pinned-tab.svg' color='#ff8a01' />
+        <link rel='apple-touch-icon' sizes='180x180' href='/apple-touch-icon.png' />
+        <link rel='icon' type='image/png' sizes='32x32' href='/favicon-32x32.png' />
+        <link rel='icon' type='image/png' sizes='16x16' href='/favicon-16x16.png' />
+        <link rel='manifest' href='/site.webmanifest' />
+        <link rel='mask-icon' href='/safari-pinned-tab.svg' color='#43b649' />
+        <meta name='msapplication-TileColor' content='#00a300' />
+        <meta name='theme-color' content='#ffffff' />
+        <meta name="description" content={appConfig.description} />
+        <meta itemprop="name" content={appConfig.name} />og:description
+        <meta itemprop="description" content={appConfig.description} />
+        <meta itemprop="image" content={appConfig.splashImage} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="" />
+        <meta name="twitter:title" content={appConfig.name} />
+        <meta name="twitter:description" content={appConfig.description} />
+        <meta name="twitter:creator" content="" />
+        <meta name="twitter:image" content={appConfig.splashImage} />
+        <meta name="twitter:image:alt" content={appConfig.description} />
+        <meta property="og:title" content={appConfig.name} />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content="http://www.defynance.co.uk" />
+        <meta property="og:image" content={appConfig.splashImage} />
+        <meta property="og:description" content={appConfig.description} />
+        <meta property="og:site_name" content={appConfig.name} />
+        {/* <script src="https://www.google.com/recaptcha/api.js"/> */}
       </Head>
       <header
         key='header'
@@ -71,10 +97,12 @@ const App = ({ Component, pageProps, ...rest }) => {
           {
             router.route === '/'
               ? <div className='p-1 -m-1 rounded r-2 border border-transparent'>
-                <Logo /></div>
+                <Logo />
+              </div>
               : <Link href='/'>
                 <a
-                  className='p-1 -m-1 rounded r-2 block hover:border-green-500 border border-transparent'>
+                  className='p-1 -m-1 rounded r-2 block hover:border-green-500 border border-transparent'
+                >
                   <Logo />
                 </a>
               </Link>
@@ -90,7 +118,7 @@ const App = ({ Component, pageProps, ...rest }) => {
       </main>
       <footer className='p-4 lg:p-10 w-full'>
         <div className='md:flex max-w-screen-xl mx-auto'>
-          <p>&copy; 2020 Defynance, Ltd.</p>
+          <div>&copy; 2020 Defynance, Ltd.</div>
           <ul className='ml-auto md:flex'>
             <li><a href='/privacy'>Privacy policy</a></li>
             <li className='md:ml-4'><a href='/terms'>Terms and conditions</a>
@@ -101,22 +129,21 @@ const App = ({ Component, pageProps, ...rest }) => {
       {
         cookiesAccepted
           ? null
-          :
-          (<aside
+          : (<aside
               className='text-xs p-4 fixed flex justify-center bottom-0 right-0 left-0 z-20'
             >
               <div
-                className="max-w-lg w-full p-2 rounded shadow-md bg-gray-100 flex"
+                className='max-w-lg w-full p-2 rounded shadow-md bg-gray-100 flex'
               >
-                <span>
-                  We us cookies. To continue using this site you must accept
-                our <a href='/terms'>terms and conditions</a>.
-                </span>
+              <span>
+                  We use cookies to remember your preferences and enhance your experience on our website. <a
+                href='/privacy'>Click here to see our cookie policy</a>.
+              </span>
                 <button
-                  className="btn ml-auto"
+                  className='btn ml-auto'
                   onClick={() => setCookiesAccepted(true)}
                 >
-                  Cool then. Accept
+                  Got it
                 </button>
               </div>
             </aside>
