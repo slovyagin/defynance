@@ -9,7 +9,7 @@ export default {
     {
       name: 'Khalid Alyousef',
       image: 'khalid.jpg',
-      description: 'MBA Candidate at Imperial College Business School | ex-BCG\n',
+      description: 'MBA Candidate at Imperial College Business School | ex-BCG',
       email: 'khalid.alyousef@defynance.co.uk'
     },
     {

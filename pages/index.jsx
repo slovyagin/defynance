@@ -1,5 +1,7 @@
 import clsx from 'clsx'
 import axios from 'axios'
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
+
 import NumberFormat from 'react-number-format'
 import appConfig from '../app.config.json'
 import calculator from '../configs/calculator.config'
@@ -13,6 +15,7 @@ export default function Home () {
   const [deposit, setDeposit] = React.useState(10)
   const [years, setYears] = React.useState(5)
   const [i, setI] = React.useState(calculator.output.switcher[0].c)
+  const { executeRecaptcha } = useGoogleReCaptcha()
 
   React.useEffect(() => {
     let timeoutId
@@ -133,7 +136,7 @@ export default function Home () {
                       loading: sending === 'sending'
                     })}
                     disabled={sending === 'sending'}
-                    data-sitekey='6LfmfQEVAAAAAOUQbJ3_y0YwTK1wUOAqeQj9re-Z'
+                    data-sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
                     data-callback='onSubmit'
                     data-action='submit'
                   >
@@ -164,7 +167,7 @@ export default function Home () {
                       <div
                         className='p-4 absolute flex flex-col inset-0 bg-red-200 justify-center items-center'
                       >
-                        <p>Unfotunately, we weren't able to send your application.
+                        <p>Unfortunately, we weren't able to send your application.
                           We're sorry!</p>
                         <p>
                           <button
@@ -178,7 +181,6 @@ export default function Home () {
                     )
                     : null
                 }
-
               </div>
             </form>
           </div>
