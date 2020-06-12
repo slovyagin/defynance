@@ -28,21 +28,21 @@ export default function Home () {
     try {
       setSending('sending')
       await axios.post(url, {
-        records: [
-          {
-            fields: {
-              Email: email,
-              Name: name
+          records: [
+            {
+              fields: {
+                Email: email,
+                Name: name
+              }
             }
+          ]
+        },
+        {
+          headers: {
+            Authorization: 'Bearer keyPh2NCeFXvPKVPO',
+            'Content-Type': 'application/json'
           }
-        ]
-      },
-      {
-        headers: {
-          Authorization: 'Bearer keyPh2NCeFXvPKVPO',
-          'Content-Type': 'application/json'
-        }
-      })
+        })
       setEmail('')
       setName('')
       setSending('succeed')
@@ -54,7 +54,7 @@ export default function Home () {
 
   return (
     <>
-      <section className='px-6 lg:px-10 max-h-20 md:text-xl md:mb-16'>
+      <section className='px-4 lg:px-10 max-h-20 md:text-xl md:mb-16'>
         <div className='max-w-screen-xl mx-auto flex flex-col relative z-10'>
           <div className='relative z-10'>
             <p className='md:text-6xl text-4xl font-serif max-w-5xl'>
@@ -65,7 +65,7 @@ export default function Home () {
             <p className='max-w-4xl'>
               With the average UK home buyer <a href='#'>paying over
               £40,000
-              </a> up front,
+            </a> up front,
               finding
               enough financial resources can seem like an impossibility. We want
               to give you another option.
@@ -93,7 +93,7 @@ export default function Home () {
                         className='block mb-1 text-sm'
                         htmlFor='email'
                       >
-                        Email:
+                        Email
                       </label>
                       <input
                         className='w-full lg input'
@@ -113,7 +113,7 @@ export default function Home () {
                         className='block mb-1 text-sm'
                         htmlFor='name'
                       >
-                        Name (optional):
+                        Name (optional)
                       </label>
                       <input
                         className='w-full lg input'
@@ -164,7 +164,8 @@ export default function Home () {
                       <div
                         className='p-4 absolute flex flex-col inset-0 bg-red-200 justify-center items-center'
                       >
-                        <p>Unfotunately, we weren't able to send your application. We're sorry!</p>
+                        <p>Unfotunately, we weren't able to send your application.
+                          We're sorry!</p>
                         <p>
                           <button
                             className='btn'
@@ -304,7 +305,16 @@ export default function Home () {
                       }
                       return `${value}%`
                     }}
-                    onValueChange={({ floatValue }) => setDeposit(floatValue)}
+                    onValueChange={({ floatValue }) => {
+                      if (floatValue > calculator.form.deposit.max) {
+                        setDeposit(calculator.form.deposit.max)
+                        return
+                      } else if (floatValue < calculator.form.deposit.min || !floatValue) {
+                        setDeposit(calculator.form.deposit.min)
+                        return
+                      }
+                      setDeposit(floatValue)
+                    }}
                   />
                   <input
                     type='range'
@@ -341,7 +351,16 @@ export default function Home () {
                       }
                       return `${value} years`
                     }}
-                    onValueChange={({ floatValue }) => setYears(floatValue)}
+                    onValueChange={({ floatValue }) => {
+                      if (floatValue > calculator.form.period.max) {
+                        setYears(calculator.form.period.max)
+                        return
+                      } else if (floatValue <= calculator.form.period.min || !floatValue) {
+                        setYears(calculator.form.period.min)
+                        return
+                      }
+                      setYears(floatValue)
+                    }}
                   />
                   <input
                     type='range'
@@ -388,11 +407,11 @@ export default function Home () {
                 </div>
                 <div className='mb-4'>
                   <b>{calculator.output.fields.fund.label}</b> <NumberFormat
-                    thousandSeparator
-                    prefix='£'
-                    displayType='text'
-                    value={Math.round(price * (deposit * 0.01))}
-                  />
+                  thousandSeparator
+                  prefix='£'
+                  displayType='text'
+                  value={Math.round(price * (deposit * 0.01))}
+                />
                 </div>
                 <div className='mb-4'>
                   <b>{calculator.output.fields.futureValue.label}</b>
@@ -414,11 +433,11 @@ export default function Home () {
                 </div>
                 <div className='mb-4'>
                   <b>{calculator.output.fields.ourShare.label}</b> <NumberFormat
-                    thousandSeparator
-                    prefix='£'
-                    displayType='text'
-                    value={Math.round(((deposit * 0.01) / 0.8) * price * ((i + 1) ** years))}
-                  />
+                  thousandSeparator
+                  prefix='£'
+                  displayType='text'
+                  value={Math.round(((deposit * 0.01) / 0.8) * price * ((i + 1) ** years))}
+                />
                 </div>
               </div>
             </div>

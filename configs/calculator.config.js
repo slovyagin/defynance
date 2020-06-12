@@ -1,15 +1,15 @@
 export default {
-  title: 'Rough Calculator',
+  title: 'Calculator',
   form: {
     purchasePrice: {
-      label: 'Purchase price, £',
+      label: 'Purchase price',
       initialValue: 1e5,
       min: 0,
       max: 1e7,
       step: 500
     },
     deposit: {
-      label: 'Percent deposit',
+      label: 'Deposit',
       initialValue: 10,
       min: 1,
       max: 100

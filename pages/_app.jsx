@@ -63,30 +63,32 @@ const App = ({ Component, pageProps, ...rest }) => {
         <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
         <link rel='alternate icon' href='/favicon.ico' />
         <link rel='mask-icon' href='/safari-pinned-tab.svg' color='#ff8a01' />
-        <link rel='apple-touch-icon' sizes='180x180' href='/apple-touch-icon.png' />
-        <link rel='icon' type='image/png' sizes='32x32' href='/favicon-32x32.png' />
-        <link rel='icon' type='image/png' sizes='16x16' href='/favicon-16x16.png' />
+        <link
+          rel='apple-touch-icon' sizes='180x180'
+          href='/apple-touch-icon.png'
+        />
         <link rel='manifest' href='/site.webmanifest' />
         <link rel='mask-icon' href='/safari-pinned-tab.svg' color='#43b649' />
         <meta name='msapplication-TileColor' content='#00a300' />
         <meta name='theme-color' content='#ffffff' />
-        <meta name="description" content={appConfig.description} />
-        <meta itemprop="name" content={appConfig.name} />og:description
-        <meta itemprop="description" content={appConfig.description} />
-        <meta itemprop="image" content={appConfig.splashImage} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="" />
-        <meta name="twitter:title" content={appConfig.name} />
-        <meta name="twitter:description" content={appConfig.description} />
-        <meta name="twitter:creator" content="" />
-        <meta name="twitter:image" content={appConfig.splashImage} />
-        <meta name="twitter:image:alt" content={appConfig.description} />
-        <meta property="og:title" content={appConfig.name} />
-        <meta property="og:type" content="article" />
-        <meta property="og:url" content="http://www.defynance.co.uk" />
-        <meta property="og:image" content={appConfig.splashImage} />
-        <meta property="og:description" content={appConfig.description} />
-        <meta property="og:site_name" content={appConfig.name} />
+        <meta name='description' content={appConfig.description} />
+        <meta itemprop='name' content={appConfig.name} />
+        og:description
+        <meta itemprop='description' content={appConfig.description} />
+        <meta itemprop='image' content={appConfig.splashImage} />
+        <meta name='twitter:card' content='summary_large_image' />
+        <meta name='twitter:site' content='' />
+        <meta name='twitter:title' content={appConfig.name} />
+        <meta name='twitter:description' content={appConfig.description} />
+        <meta name='twitter:creator' content='' />
+        <meta name='twitter:image' content={appConfig.splashImage} />
+        <meta name='twitter:image:alt' content={appConfig.description} />
+        <meta property='og:title' content={appConfig.name} />
+        <meta property='og:type' content='article' />
+        <meta property='og:url' content='http://www.defynance.co.uk' />
+        <meta property='og:image' content={appConfig.splashImage} />
+        <meta property='og:description' content={appConfig.description} />
+        <meta property='og:site_name' content={appConfig.name} />
         {/* <script src="https://www.google.com/recaptcha/api.js"/> */}
       </Head>
       <header
@@ -129,16 +131,19 @@ const App = ({ Component, pageProps, ...rest }) => {
       {
         cookiesAccepted
           ? null
-          : (<aside
+          : (
+            <aside
               className='text-xs p-4 fixed flex justify-center bottom-0 right-0 left-0 z-20'
             >
               <div
                 className='max-w-lg w-full p-2 rounded shadow-md bg-gray-100 flex'
               >
-              <span>
+                <span>
                   We use cookies to remember your preferences and enhance your experience on our website. <a
-                href='/privacy'>Click here to see our cookie policy</a>.
-              </span>
+                    href='/privacy'
+                  >Click here to see our cookie policy
+                  </a>.
+                </span>
                 <button
                   className='btn ml-auto'
                   onClick={() => setCookiesAccepted(true)}
