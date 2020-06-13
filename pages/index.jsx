@@ -139,6 +139,7 @@ export default function Home () {
                     data-sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
                     data-callback='onSubmit'
                     data-action='submit'
+                    data-badge="inline"
                   >
                     {sending === 'sending' ? 'Registering your interest...' : 'Register your interest'}
                   </button>

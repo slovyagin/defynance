@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.grecaptcha-badge {
+  visibility: hidden;
+}
+
 ::selection {
   @apply bg-green-200
 }

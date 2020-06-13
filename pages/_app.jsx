@@ -113,24 +113,28 @@ const App = ({ Component, pageProps, ...rest }) => {
                 </Link>
             }
             <nav className='lg:ml-8 md:ml-6 mt-4 md:mt-0 items-start'>
-              {
-                nav.map(({ name, url }, i) => {
-                  return (
-                    <a
-                      key={name}
-                      className={
-                        clsx({
-                          'pointer-events-none border-green-400 text-black': router.pathname === `/${url}`,
-                          'ml-2': i > 0
-                        })
-                      }
-                      href={`/${url}`}
-                    >
-                      {name}
-                    </a>
-                  )
-                })
-              }
+              <ul className='flex'>
+                {
+                  nav.map(({ name, url }, i) => {
+                    return (
+                      <li key={name}
+                      >
+                        <a
+                          className={
+                            clsx({
+                              'pointer-events-none border-green-400 text-black': router.pathname === `/${url}`,
+                              'ml-2': i > 0
+                            })
+                          }
+                          href={`/${url}`}
+                        >
+                          {name}
+                        </a>
+                      </li>
+                    )
+                  })
+                }
+              </ul>
             </nav>
           </div>
         </header>
