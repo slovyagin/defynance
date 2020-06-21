@@ -3,14 +3,14 @@ export default {
   form: {
     purchasePrice: {
       label: 'Purchase price',
-      initialValue: 1e5,
-      min: 0,
+      initialValue: 3e5,
+      min: 3e5,
       max: 1e7,
       step: 500
     },
     deposit: {
       label: 'Deposit',
-      initialValue: 10,
+      initialValue: 30,
       min: 1,
       max: 100
     },

@@ -4,6 +4,10 @@ export default [
     url: 'how',
   },
   {
+    name: 'FAQ',
+    url: 'faq',
+  },
+  {
     name: 'About Us',
     url: 'about',
   }

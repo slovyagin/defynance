@@ -5,13 +5,15 @@ import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import NumberFormat from 'react-number-format'
 import appConfig from '../app.config.json'
 import calculator from '../configs/calculator.config'
+import { SharedStateContext } from './_app'
 
 export default function Home () {
+  const { isHeaderFixed } = React.useContext(SharedStateContext);
   const [email, setEmail] = React.useState('')
   const [name, setName] = React.useState('')
   const [sending, setSending] = React.useState('initial')
   const [err, setErr] = React.useState(false)
-  const [price, setPrice] = React.useState(1e5)
+  const [price, setPrice] = React.useState(calculator.form.purchasePrice.initialValue)
   const [deposit, setDeposit] = React.useState(10)
   const [years, setYears] = React.useState(5)
   const [i, setI] = React.useState(calculator.output.switcher[0].c)
@@ -66,7 +68,7 @@ export default function Home () {
               <strong>Big, front page marketing slogan.</strong>
             </p>
             <p className='max-w-4xl'>
-              With the average UK home buyer <a href='#'>paying over
+              With the average UK home buyer <a href='#' className='bordered'>paying over
               £40,000
             </a> up front,
               finding
@@ -275,16 +277,16 @@ export default function Home () {
                     thousandSeparator
                     value={price}
                   />
-                  <input
-                    id='price-range'
-                    min={calculator.form.purchasePrice.min}
-                    max={calculator.form.purchasePrice.max}
-                    name='price-range'
-                    onChange={event => setPrice(event.target.value)}
-                    step={calculator.form.purchasePrice.step}
-                    type='range'
-                    value={price}
-                  />
+                  {/*<input*/}
+                  {/*  id='price-range'*/}
+                  {/*  min={calculator.form.purchasePrice.min}*/}
+                  {/*  max={calculator.form.purchasePrice.max}*/}
+                  {/*  name='price-range'*/}
+                  {/*  onChange={event => setPrice(event.target.value)}*/}
+                  {/*  step={calculator.form.purchasePrice.step}*/}
+                  {/*  type='range'*/}
+                  {/*  value={price}*/}
+                  {/*/>*/}
                 </div>
                 <div className='md:mb-4'>
                   <label
