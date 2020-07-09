@@ -9,14 +9,24 @@ import LogoSVG from '../assets/logo.svg'
 import appConfig from '../app.config.json'
 import nav from '../configs/nav.config'
 
+export const SharedStateContext = React.createContext()
+
 function Logo () {
+  const { isHeaderFixed } = React.useContext(SharedStateContext)
   return (
     <div className='text-green-500'>
-      <LogoSVG
-        height={23}
-        width={150}
-        className='fill-current'
-      />
+      <div
+        className='overflow-hidden'
+        style={isHeaderFixed ? {
+          width: 21
+        } : null}
+      >
+        <LogoSVG
+          height={23}
+          width={150}
+          className='fill-current'
+        />
+      </div>
     </div>
   )
 }
@@ -53,8 +63,6 @@ function useCookiesBanner () {
 
   return [cookiesAccepted, setCookiesAccepted]
 }
-
-export const SharedStateContext = React.createContext()
 
 const App = ({ Component, pageProps, ...rest }) => {
   const [cookiesAccepted, setCookiesAccepted] = useCookiesBanner()
@@ -132,28 +140,23 @@ const App = ({ Component, pageProps, ...rest }) => {
           <header
             id='header'
             key='header'
-            className={clsx('top-0 w-full z-20 md:transition-all md:duration-100', {
+            className={clsx('top-0 w-full z-20', {
               'md:fixed md:p-4 md:py-2': sharedState.isHeaderFixed,
               'p-4 lg:p-10 relative': !sharedState.isHeaderFixed
             })}
           >
-            <div
-              className={clsx('md:flex max-w-screen-xl mx-auto md:bg-white md:rounded', {
-                'md:p-2': sharedState.isHeaderFixed
-              })}
-              style={sharedState.isHeaderFixed ? {
-                WebkitBackdropFilter: 'blur(15px)'
-              } : null}
-            >
+            <div className={clsx('md:flex mx-auto md:rounded', {
+              'max-w-screen-xl': !sharedState.isHeaderFixed
+            })}>
               {
                 router.route === '/'
                   ? <div
-                    className='p-1 -m-1 rounded r-2 border border-transparent'>
+                    className='p-1 -m-1 rounded r-2 border border-transparent bg-white'>
                     <Logo />
                   </div>
                   : <Link href='/'>
                     <a
-                      className='p-1 -m-1 rounded r-2 block hover:border-green-500 border border-transparent'
+                      className='p-1 -m-1 rounded r-2 block hover:border-green-500 border border-transparent bg-white'
                     >
                       <Logo />
                     </a>
@@ -168,7 +171,7 @@ const App = ({ Component, pageProps, ...rest }) => {
                         >
                           <a
                             className={
-                              clsx('font-bold', {
+                              clsx('font-bold bg-white', {
                                 'pointer-events-none border-green-400 text-black': router.pathname === `/${url}`,
                                 'ml-2': i > 0
                               })

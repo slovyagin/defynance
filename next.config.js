@@ -18,7 +18,9 @@ module.exports = withMDX({
         options: {
           svgoConfig: {
             plugins: {
-              removeTitle: false
+              removeTitle: false,
+              cleanupIDs: false,
+              transformsWithOnePath: false
             }
           }
         }
