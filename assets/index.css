@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+header {
+  @apply p-4 relative top-0 w-full z-20
+}
+
+@screen lg {
+  header {
+    @apply px-10
+  }
+}
+
+@screen md {
+  header.--sticky {
+    @apply fixed pointer-events-none
+  }
+}
+
 .grecaptcha-badge {
   visibility: hidden;
 }
@@ -17,6 +33,16 @@
 html {
   @apply bg-white p-0 text-gray-900 h-auto text-lg;
   font-variant-ligatures: common-ligatures;
+}
+
+main {
+  margin-top: 0 !important;
+}
+
+@screen md {
+  main {
+    margin-top: auto;
+  }
 }
 
 a, input, button {
@@ -36,7 +62,7 @@ a, input, button {
   @apply border-green-600
 }
 
-@media (min-width: 1280px) {
+@screen lg {
   .input.lg,
   .btn.lg {
     @apply p-4 text-xl
@@ -88,7 +114,7 @@ a:hover {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  @apply font-serif mt-6 mb-2 font-bold
+  @apply font-serif pt-6 pb-2 font-bold m-0
 }
 
 h1 {
@@ -114,7 +140,6 @@ p {
 dt {
   @apply font-bold
 }
-
 
 .\@md h1,
 .\@md h2,

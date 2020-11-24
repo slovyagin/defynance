@@ -29,7 +29,7 @@ export default function Home () {
   }, [sending])
 
   async function sendEmail () {
-    const url = 'https://api.airtable.com/v0/appeBq5WaMAMoTlYB/Email'
+    const url = `https://api.airtable.com/v0/${process.env.NEXT_PUBLIC_DEFYNANCE_TABLE_ID}/Email`
     try {
       setSending('sending')
       await axios.post(url, {
@@ -44,7 +44,7 @@ export default function Home () {
         },
         {
           headers: {
-            Authorization: 'Bearer keyPh2NCeFXvPKVPO',
+            Authorization: `Bearer ${NEXT_PUBLIC_AIRTABLE_API_KEY}`,
             'Content-Type': 'application/json'
           }
         })

@@ -14,29 +14,31 @@ export const SharedStateContext = React.createContext()
 function Logo () {
   const { isHeaderFixed } = React.useContext(SharedStateContext)
   return (
-    <div className='text-green-500'>
-      <div
-        className='overflow-hidden'
-        style={isHeaderFixed ? {
-          width: 21
-        } : null}
-      >
-        <LogoSVG
-          height={23}
-          width={150}
-          className='fill-current'
-        />
-      </div>
+    <div
+      className='overflow-hidden'
+      style={isHeaderFixed ? { width: 21 } : null}
+    >
+      <LogoSVG
+        height={23}
+        width={150}
+        className='fill-current'
+      />
     </div>
   )
 }
 
 const components = {
-  wrapper: props => (
-    <section className='@md p-4 lg:p-10 pt-0 lg:pt-0'>
-      <div className='max-w-screen-xl mx-auto' {...props} />
-    </section>
-  )
+  wrapper: props => {
+    const pageTitle = props.children.find(({ props }) => props.originalType === 'h1').props.children;
+    return (
+        <section className='@md p-4 lg:p-10 pt-0 lg:pt-0'>
+          <Head>
+            <title>{appConfig.name} / {pageTitle ?? '?'}</title>
+          </Head>
+          <div className='max-w-screen-xl mx-auto' {...props} />
+        </section>
+    )
+  }
 }
 
 function useCookiesBanner () {
@@ -140,30 +142,27 @@ const App = ({ Component, pageProps, ...rest }) => {
           <header
             id='header'
             key='header'
-            className={clsx('top-0 w-full z-20', {
-              'md:fixed md:p-4 md:py-2': sharedState.isHeaderFixed,
-              'p-4 lg:p-10 relative': !sharedState.isHeaderFixed
+            className={clsx({
+              '--sticky': sharedState.isHeaderFixed,
+              '--initial': !sharedState.isHeaderFixed
             })}
           >
             <div className={clsx('md:flex mx-auto md:rounded', {
-              'max-w-screen-xl': !sharedState.isHeaderFixed
+              'md:max-w-screen-xl': !sharedState.isHeaderFixed
             })}>
               {
                 router.route === '/'
-                  ? <div
-                    className='p-1 -m-1 rounded r-2 border border-transparent bg-white'>
+                  ? <div className='p-1 -m-1 r-2 text-green-500 pointer-events-auto'>
                     <Logo />
                   </div>
                   : <Link href='/'>
-                    <a
-                      className='p-1 -m-1 rounded r-2 block hover:border-green-500 border border-transparent bg-white'
-                    >
+                    <a className='p-1 -m-1 r-2 block text-green-500 bg-transparent hover:bg-transparent hover:text-orange-500 pointer-events-auto'>
                       <Logo />
                     </a>
                   </Link>
               }
               <nav className='-ml-1 md:ml-auto mt-4 md:mt-0 items-start'>
-                <ul className='flex'>
+                <ul className='flex pointer-events-auto'>
                   {
                     nav.map(({ name, url }, i) => {
                       return (
@@ -190,6 +189,7 @@ const App = ({ Component, pageProps, ...rest }) => {
           </header>
           <main
             key='main'
+            className='mt-0 md:mt-auto'
             style={{ marginTop: sharedState.isHeaderFixed ? sharedState.headerHeight : 0 }}
           >
             <Component {...pageProps} />
@@ -210,12 +210,12 @@ const App = ({ Component, pageProps, ...rest }) => {
               ? null
               : (
                 <aside
-                  className='text-xs p-4 fixed flex justify-center bottom-0 right-0 left-0 z-20'
+                  className='text-xs p-4 fixed flex justify-center bottom-0 right-0 left-0 z-20 pointer-events-none'
                 >
                   <div
-                    className='max-w-lg w-full p-2 rounded shadow-md bg-gray-100 flex'
+                    className='max-w-lg w-full p-2 rounded shadow-md bg-gray-100 flex pointer-events-auto'
                   >
-                <span>
+                <span className='ml-2'>
                   We use cookies to remember your preferences and enhance your experience on our website. <a
                   href='/privacy'
                 >Click here to see our cookie policy

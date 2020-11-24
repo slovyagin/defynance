@@ -8,7 +8,7 @@ export default [
     url: 'faq',
   },
   {
-    name: 'About Us',
+    name: 'About us',
     url: 'about',
   }
 ]
