@@ -1,0 +1,166 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+header {
+  @apply p-4 relative top-0 w-full z-20
+}
+
+@screen lg {
+  header {
+    @apply px-10
+  }
+}
+
+@screen md {
+  header.--sticky {
+    @apply fixed pointer-events-none
+  }
+}
+
+.grecaptcha-badge {
+  visibility: hidden;
+}
+
+::selection {
+  @apply bg-green-200
+}
+
+* {
+  -webkit-tap-highlight-color: var(--green-100)
+}
+
+html {
+  @apply bg-white p-0 text-gray-900 h-auto text-lg;
+  font-variant-ligatures: common-ligatures;
+}
+
+main {
+  margin-top: 0 !important;
+}
+
+@screen md {
+  main {
+    margin-top: auto;
+  }
+}
+
+a, input, button {
+  @apply outline-none transition-colors duration-200
+}
+
+.input {
+  @apply p-2 border-solid border-2 border-green-400 rounded mr-4 text-blue-800
+}
+
+.input {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.input:hover {
+  @apply border-green-600
+}
+
+@screen lg {
+  .input.lg,
+  .btn.lg {
+    @apply p-4 text-xl
+  }
+}
+
+.input:focus {
+  @apply bg-green-100 border-green-500
+}
+
+.input:disabled {
+  @apply bg-gray-100 border-gray-400 text-gray-400
+}
+
+.btn {
+  @apply select-none whitespace-no-wrap border-2 border-yellow-400 bg-yellow-400 p-2 rounded font-bold text-blue-800
+}
+
+.btn:hover {
+  @apply border-yellow-600
+}
+
+.btn:active {
+  @apply transform translate-x-px translate-y-px
+}
+
+.btn:focus {
+  @apply shadow-outline
+}
+
+.btn.loading {
+  @apply cursor-wait
+}
+
+.btn:disabled {
+  @apply shadow-none border-yellow-200 bg-yellow-200 text-yellow-400 translate-x-0 translate-y-0
+}
+
+a {
+  @apply p-1 -my-1 text-orange-500 rounded
+}
+
+a.bordered {
+  @apply border-orange-200 border
+}
+
+a:hover {
+  @apply text-orange-600 bg-orange-100 border-orange-500
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-serif pt-6 pb-2 font-bold m-0
+}
+
+h1 {
+  @apply text-4xl
+}
+
+h2 {
+  @apply text-3xl font-sans
+}
+
+h3 {
+  @apply text-2xl
+}
+
+h4 {
+  @apply text-xl font-sans
+}
+
+p {
+  @apply my-2
+}
+
+dt {
+  @apply font-bold
+}
+
+.\@md h1,
+.\@md h2,
+.\@md h3,
+.\@md h4,
+.\@md h5,
+.\@md h6,
+.\@md p,
+.\@md ul,
+.\@md ol {
+  @apply max-w-3xl
+}
+
+.\@md ol {
+  @apply list-disc ml-10
+}
+
+.\@md ul {
+  @apply list-decimal ml-10
+}
+
+.\@md li {
+  @apply mb-2
+}
